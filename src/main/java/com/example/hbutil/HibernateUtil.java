@@ -8,6 +8,8 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
@@ -15,12 +17,14 @@ public class HibernateUtil {
 
     private static StandardServiceRegistry registry;
     private static SessionFactory sessionFactory;
+    private static final Logger LOGGER = LoggerFactory.getLogger(HibernateUtil.class);
 
     private HibernateUtil() {
 
     }
 
     public static SessionFactory getSessionFactory() {
+        LOGGER.info("initializing Hibernate SessionFactory");
         if (sessionFactory == null) {
             try {
                 StandardServiceRegistryBuilder registryBuilder = getServiceRegistryBuilder();
@@ -40,6 +44,7 @@ public class HibernateUtil {
                 }
             }
         }
+        LOGGER.info("initialized Hibernate SessionFactory");
         return sessionFactory;
     }
 

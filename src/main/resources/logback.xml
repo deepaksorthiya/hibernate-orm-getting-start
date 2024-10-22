@@ -8,4 +8,7 @@
     <root level="INFO">
         <appender-ref ref="stdout"/>
     </root>
+    <logger name="org.hibernate.orm.jdbc" level="TRACE">
+        <appender-ref ref="stdout"/>
+    </logger>
 </configuration>
