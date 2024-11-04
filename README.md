@@ -3,7 +3,7 @@
 ## Requirements:
 
 ```
-Hibernate: 6.6.1.Final
+Hibernate: 6.6.3.Final
 H2 Database: 2.3.232
 Maven: 3.9+
 JDK: 17

@@ -10,13 +10,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
-        <hibernate.orm.version>6.6.1.Final</hibernate.orm.version>
+        <hibernate.orm.version>6.6.3.Final</hibernate.orm.version>
         <h2db.version>2.3.232</h2db.version>
-        <logback.classic.version>1.5.11</logback.classic.version>
-        <maven-surefire-plugin.version>3.5.1</maven-surefire-plugin.version>
+        <logback.classic.version>1.5.12</logback.classic.version>
+        <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <junit-bom.version>5.11.3</junit-bom.version>
-        <lombok.version>1.18.34</lombok.version>
+        <lombok.version>1.18.36</lombok.version>
+        <datasource-proxy.version>1.10</datasource-proxy.version>
     </properties>
 
     <dependencyManagement>
@@ -48,8 +49,15 @@
             <artifactId>jakarta.transaction-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-hikaricp</artifactId>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>6.2.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -60,6 +68,11 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2db.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.ttddyy</groupId>
+            <artifactId>datasource-proxy</artifactId>
+            <version>${datasource-proxy.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

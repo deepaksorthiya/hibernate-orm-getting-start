@@ -1,5 +1,6 @@
 import com.example.hbutil.HibernateUtil;
 import com.example.model.Event;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -8,31 +9,59 @@ import org.junit.jupiter.api.Test;
 import static java.lang.System.out;
 import static java.time.LocalDateTime.now;
 
+@Slf4j
 public class HibernateSessionFactoryTest {
     private static SessionFactory sessionFactory;
 
+
     @BeforeAll
     protected static void setUp() {
-        sessionFactory = HibernateUtil.getSessionFactory();
+        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{Event.class});
+        insertInitRecords();
     }
 
     @AfterAll
     protected static void tearDown() {
-        if (sessionFactory != null) {
-            sessionFactory.close();
-        }
+        HibernateUtil.shutdown();
     }
 
-    @Test
-    public void basicUsage() {
+    private static void insertInitRecords() {
         // create a couple of events...
         sessionFactory.inTransaction(session -> {
             session.persist(new Event("Our very first event!", now()));
             session.persist(new Event("A follow up event", now()));
         });
 
+    }
+
+    @Test
+    void insertEvent() {
+        // create a couple of events...
+        log.info("Adding Events.........");
+        sessionFactory.inTransaction(session -> {
+            session.persist(new Event("Our very first event!", now()));
+            session.persist(new Event("A follow up event", now()));
+        });
+        log.info("Added Events............");
+    }
+
+    @Test
+    public void getEvents() {
+        log.info("Fetching Events.........");
         // now lets pull events from the database and list them
-        sessionFactory.inTransaction(session -> session.createSelectionQuery("from Event", Event.class).getResultList()
-                .forEach(event -> out.println("com.example.model.Event (" + event.getDate() + ") : " + event.getTitle())));
+        sessionFactory.inTransaction(session -> session.createQuery("select e from Event e", Event.class).getResultList()
+                .forEach(event -> out.println("Event (" + event.getDate() + ") : " + event.getTitle())));
+        log.info("Fetched Events.........");
+    }
+
+    @Test
+    public void removeEvent() {
+        log.info("Removing Event.........");
+        //remove event
+        sessionFactory.inTransaction(session -> {
+            Event event = session.getReference(Event.class, 1);
+            session.remove(event);
+        });
+        log.info("Removed Event.........");
     }
 }
