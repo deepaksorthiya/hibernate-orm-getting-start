@@ -12,7 +12,7 @@
         <java.version>17</java.version>
         <hibernate.orm.version>6.6.1.Final</hibernate.orm.version>
         <h2db.version>2.3.232</h2db.version>
-        <logback.classic.version>1.5.11</logback.classic.version>
+        <logback.classic.version>1.5.12</logback.classic.version>
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <junit-bom.version>5.11.3</junit-bom.version>
