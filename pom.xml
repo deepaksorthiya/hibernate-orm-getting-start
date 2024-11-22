@@ -10,7 +10,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
-        <hibernate.orm.version>6.6.1.Final</hibernate.orm.version>
+        <hibernate.orm.version>6.6.3.Final</hibernate.orm.version>
         <h2db.version>2.3.232</h2db.version>
         <logback.classic.version>1.5.12</logback.classic.version>
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
