@@ -1,15 +1,17 @@
 package com.example.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "Events")
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
+@ToString
+@Entity
+@Table(name = "Events")
 public class Event {
 
     @Id
@@ -21,22 +23,9 @@ public class Event {
     @Column(name = "eventDate")
     private LocalDateTime date;
 
-    public Event() {
-        // this form used by Hibernate
-    }
-
     public Event(String title, LocalDateTime date) {
         // for application use, to create new events
         this.title = title;
         this.date = date;
-    }
-
-    @Override
-    public String toString() {
-        return "Event{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", date=" + date +
-                '}';
     }
 }

@@ -19,7 +19,7 @@ public class ContactInfo {
     @ToString.Exclude
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id") // comment it to show warning message by setting details to null
     private UserProfile userProfile;
 
 }

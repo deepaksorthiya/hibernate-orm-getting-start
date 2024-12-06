@@ -39,6 +39,11 @@ class OneToOneUserProfileContactInfoTest {
             ContactInfo contactInfo2 = new ContactInfo(null, "222222", "432 Ab", null);
             userProfile2.setDetails(contactInfo2);
             session.persist(userProfile2);
+
+            UserProfile userProfile3 = new UserProfile(null, "thirdUser", "thirdUser", "thirdUser@gmail.com", null);
+            ContactInfo contactInfo3 = new ContactInfo(null, "3333333", "432 Ab", null);
+            userProfile3.setDetails(contactInfo3);
+            session.persist(userProfile3);
         });
 
     }
@@ -72,6 +77,18 @@ class OneToOneUserProfileContactInfoTest {
             }
         });
         log.info("Removing ChildContactInfo End.........");
+    }
+
+    @Test
+    void removeChildContactInfoWithoutRemoveAndSettingNull() {
+        log.info("Removing ChildContactInfo Without Remove Start.........");
+        //remove event
+        sessionFactory.inTransaction(session -> {
+            UserProfile userProfile = session.find(UserProfile.class, 3L);
+            assertNotNull(userProfile);
+            userProfile.setDetails(null);
+        });
+        log.info("Removing ChildContactInfo Without Remove End.........");
     }
 
     @Test
