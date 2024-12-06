@@ -5,6 +5,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import net.ttddyy.dsproxy.listener.logging.DefaultQueryLogEntryCreator;
 import net.ttddyy.dsproxy.listener.logging.SystemOutQueryLoggingListener;
 import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
+import org.h2.jdbcx.JdbcDataSource;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -25,16 +26,20 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class HibernateUtil {
-    private static SessionFactory sessionFactory;
+    private static volatile SessionFactory sessionFactory;
     private static final List<Closeable> closeable = new ArrayList<>();
 
     private HibernateUtil() throws IllegalAccessException {
         throw new IllegalAccessException("This is utility method, cannot create object");
     }
 
-    public static synchronized SessionFactory getSessionFactory(Class[] classes) {
+    public static SessionFactory getSessionFactory(Class<?>[] classes) {
         if (sessionFactory == null) {
-            sessionFactory = buildSessionFactory(classes);
+            synchronized (HibernateUtil.class) {
+                if (sessionFactory == null) { //double lock checking
+                    sessionFactory = buildSessionFactory(classes);
+                }
+            }
         }
         return sessionFactory;
     }
@@ -54,7 +59,7 @@ public class HibernateUtil {
         closeable.clear();
     }
 
-    private static SessionFactory buildSessionFactory(Class[] classes) {
+    private static SessionFactory buildSessionFactory(Class<?>[] classes) {
         StandardServiceRegistry standardRegistry = null;
         try {
             StandardServiceRegistryBuilder standardRegistryBuilder = new StandardServiceRegistryBuilder();
@@ -102,25 +107,29 @@ public class HibernateUtil {
         SystemOutQueryLoggingListener listener = new CustomSysLogger();
         listener.setQueryLogEntryCreator(creator);
 
+        //actual datasource
+        DataSource h2DataSource = getH2DataSource();
+
         // Create ProxyDataSource
-        return ProxyDataSourceBuilder.create(getH2DataSource())
+        DataSource proxyDatasource = ProxyDataSourceBuilder.create(h2DataSource)
                 .name("ProxyDataSource")
                 .countQuery()
                 .multiline()
                 .listener(listener)
                 .logSlowQueryToSysOut(1, TimeUnit.MINUTES)
                 .build();
+        return getHikariDataSource(proxyDatasource);
     }
 
-    private static DataSource getH2DataSource() {
+    private static DataSource getHikariDataSource(DataSource dataSource) {
 
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
-        config.setUsername("sa");
-        config.setPassword("");
+        config.setDataSource(dataSource);
+        config.addDataSourceProperty("useServerPrepStmts", "false");
         config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSize", "500");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.addDataSourceProperty("rewriteBatchedStatements", "true");
 
         // Maximum waiting time for a connection from the pool
         config.setConnectionTimeout(20000);
@@ -131,8 +140,19 @@ public class HibernateUtil {
         // Maximum time that a connection is allowed to sit ideal in the pool
         config.setIdleTimeout(300000);
 
+        //Don't use AutoCommit
+        config.setAutoCommit(false);
+
         HikariDataSource ds = new HikariDataSource(config);
         closeable.add(ds::close);
+        return ds;
+    }
+
+    private static DataSource getH2DataSource() {
+        JdbcDataSource ds = new JdbcDataSource();
+        ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
+        ds.setUser("sa");
+        ds.setPassword("");
         return ds;
     }
 

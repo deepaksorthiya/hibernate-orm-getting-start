@@ -10,22 +10,22 @@ import static java.lang.System.out;
 import static java.time.LocalDateTime.now;
 
 @Slf4j
-public class HibernateSessionFactoryTest {
+class HibernateSessionFactoryTest {
     private static SessionFactory sessionFactory;
 
 
     @BeforeAll
-    protected static void setUp() {
+    static void setUp() {
         sessionFactory = HibernateUtil.getSessionFactory(new Class[]{Event.class});
         insertInitRecords();
     }
 
     @AfterAll
-    protected static void tearDown() {
+    static void tearDown() {
         HibernateUtil.shutdown();
     }
 
-    private static void insertInitRecords() {
+    static void insertInitRecords() {
         // create a couple of events...
         sessionFactory.inTransaction(session -> {
             session.persist(new Event("Our very first event!", now()));
@@ -46,7 +46,7 @@ public class HibernateSessionFactoryTest {
     }
 
     @Test
-    public void getEvents() {
+    void getEvents() {
         log.info("Fetching Events.........");
         // now lets pull events from the database and list them
         sessionFactory.inTransaction(session -> session.createQuery("select e from Event e", Event.class).getResultList()
@@ -55,7 +55,7 @@ public class HibernateSessionFactoryTest {
     }
 
     @Test
-    public void removeEvent() {
+    void removeEvent() {
         log.info("Removing Event.........");
         //remove event
         sessionFactory.inTransaction(session -> {

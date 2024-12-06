@@ -14,11 +14,11 @@ import static java.lang.System.out;
 import static java.time.LocalDateTime.now;
 
 @Slf4j
-public class HibernateEntityManagerTest {
+class HibernateEntityManagerTest {
     private static EntityManagerFactory entityManagerFactory;
 
     @BeforeAll
-    protected static void setUp() {
+    static void setUp() {
         // an EntityManagerFactory is set up once for an application
         // IMPORTANT: notice how the name here matches the name we
         // gave the persistence-unit in persistence.xml
@@ -28,7 +28,7 @@ public class HibernateEntityManagerTest {
 
     }
 
-    private static void insertInitRecords() {
+    static void insertInitRecords() {
         // create a couple of events...
         inTransaction(entityManager -> {
             entityManager.persist(new Event("Our very first event!", now()));
@@ -58,7 +58,7 @@ public class HibernateEntityManagerTest {
     }
 
     @Test
-    public void removeEvent() {
+    void removeEvent() {
         log.info("Removing Event.........");
         //remove event
         inTransaction(entityManager -> {
@@ -81,7 +81,7 @@ public class HibernateEntityManagerTest {
     }
 
     @AfterAll
-    protected static void tearDown() {
+    static void tearDown() {
         entityManagerFactory.close();
     }
 

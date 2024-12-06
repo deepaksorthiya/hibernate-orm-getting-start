@@ -10,22 +10,22 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
-public class HibernateSessionFactoryOneToManyTest {
+class OneToManyPostCommentTest {
     private static SessionFactory sessionFactory;
 
 
     @BeforeAll
-    protected static void setUp() {
+    static void setUp() {
         sessionFactory = HibernateUtil.getSessionFactory(new Class[]{Post.class, PostComment.class});
         insertInitRecords();
     }
 
     @AfterAll
-    protected static void tearDown() {
+    static void tearDown() {
         HibernateUtil.shutdown();
     }
 
-    private static void insertInitRecords() {
+    static void insertInitRecords() {
         // create a couple of events...
         sessionFactory.inTransaction(session -> {
             session.persist(
@@ -60,7 +60,7 @@ public class HibernateSessionFactoryOneToManyTest {
     }
 
     @Test
-    public void getPostWithComments() {
+    void getPostWithComments() {
         log.info("Fetching Post With Comments.........");
         // now lets pull events from the database and list them
         sessionFactory.inTransaction(session -> {
@@ -78,7 +78,7 @@ public class HibernateSessionFactoryOneToManyTest {
     }
 
     @Test
-    public void removePostComment() {
+    void removePostComment() {
         log.info("Removing Post Comment.........");
         //remove event
         sessionFactory.inTransaction(session -> {
@@ -91,7 +91,7 @@ public class HibernateSessionFactoryOneToManyTest {
     }
 
     @Test
-    public void testRemoveParent() {
+    void testRemoveParent() {
         sessionFactory.inTransaction(entityManager -> {
             Post post = entityManager.createQuery("""
                             select p 

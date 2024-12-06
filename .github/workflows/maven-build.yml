@@ -37,5 +37,22 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Clean Build Test with Maven
-        run: mvn clean package --file pom.xml --batch-mode --update-snapshots
+      - name: Clean with Maven
+        run: mvn clean --file pom.xml --batch-mode --update-snapshots
+      - name: Cache SonarQube Cloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=deepaksorthiya_hibernate-6-orm-getting-start
