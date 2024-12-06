@@ -3,14 +3,14 @@ package com.example;
 import com.example.hbutil.HibernateUtil;
 import com.example.onetone.ContactInfo;
 import com.example.onetone.UserProfile;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static java.lang.System.out;
-
+@Slf4j
 public class OneToOneMultiThreadingApp {
 
     public static void main(String[] args) throws InterruptedException {
@@ -30,7 +30,7 @@ public class OneToOneMultiThreadingApp {
             }
             Thread.sleep(10000);
             sessionFactory.inTransaction(session -> session.createQuery("select e from UserProfile e", UserProfile.class).getResultList()
-                    .forEach(userProfile -> out.println("UserProfile (" + userProfile.getFirstName() + ") : " + userProfile.getLastName())));
+                    .forEach(userProfile -> System.out.println("UserProfile (" + userProfile.getFirstName() + ") : " + userProfile.getLastName())));
         } finally {
             assert executor != null;
             shutdownAndAwaitTermination(executor);
