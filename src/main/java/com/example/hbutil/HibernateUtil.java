@@ -2,6 +2,7 @@ package com.example.hbutil;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 import net.ttddyy.dsproxy.listener.logging.DefaultQueryLogEntryCreator;
 import net.ttddyy.dsproxy.listener.logging.SystemOutQueryLoggingListener;
 import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
@@ -11,7 +12,10 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Environment;
+import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.cfg.BatchSettings;
+import org.hibernate.cfg.JdbcSettings;
+import org.hibernate.cfg.SchemaToolingSettings;
 import org.hibernate.engine.jdbc.internal.FormatStyle;
 import org.hibernate.engine.jdbc.internal.Formatter;
 import org.hibernate.tool.schema.Action;
@@ -19,27 +23,21 @@ import org.hibernate.tool.schema.Action;
 import javax.sql.DataSource;
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class HibernateUtil {
-    private static volatile SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
     private static final List<Closeable> closeable = new ArrayList<>();
 
     private HibernateUtil() throws IllegalAccessException {
         throw new IllegalAccessException("This is utility method, cannot create object");
     }
 
-    public static SessionFactory getSessionFactory(Class<?>[] classes) {
+    public static synchronized SessionFactory getSessionFactory(Class<?>[] classes) {
         if (sessionFactory == null) {
-            synchronized (HibernateUtil.class) {
-                if (sessionFactory == null) { //double lock checking
-                    sessionFactory = buildSessionFactory(classes);
-                }
-            }
+            sessionFactory = buildSessionFactory(classes);
         }
         return sessionFactory;
     }
@@ -53,7 +51,7 @@ public class HibernateUtil {
             try {
                 closeable.close();
             } catch (IOException e) {
-                System.err.println("Failed" + e);
+                log.error("Failed {}", e.getMessage());
             }
         }
         closeable.clear();
@@ -64,17 +62,17 @@ public class HibernateUtil {
         try {
             StandardServiceRegistryBuilder standardRegistryBuilder = new StandardServiceRegistryBuilder();
             Map<String, Object> settings = new HashMap<>();
-            settings.put(Environment.JAKARTA_JTA_DATASOURCE, getDataSource());
-            //settings.put(Environment.SHOW_SQL, "true");
-            //settings.put(Environment.FORMAT_SQL, "true");
-            //settings.put(Environment.HIGHLIGHT_SQL, "true");
-            //settings.put(Environment.DIALECT, "org.hibernate.dialect.H2Dialect");
-            //settings.put(Environment.GENERATE_STATISTICS, true);
-            settings.put(Environment.HBM2DDL_AUTO, Action.ACTION_CREATE_THEN_DROP);
-            settings.put(Environment.ORDER_UPDATES, true);
-            settings.put(Environment.ORDER_INSERTS, true);
-            settings.put(Environment.STATEMENT_BATCH_SIZE, 20);
-            settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+            settings.put(JdbcSettings.JAKARTA_JTA_DATASOURCE, getDataSource());
+//            settings.put(JdbcSettings.SHOW_SQL, "true");
+//            settings.put(JdbcSettings.FORMAT_SQL, "true");
+//            settings.put(JdbcSettings.HIGHLIGHT_SQL, "true");
+//            settings.put(JdbcSettings.DIALECT, "org.hibernate.dialect.H2Dialect");
+//            settings.put(StatisticsSettings.GENERATE_STATISTICS, true);
+            settings.put(SchemaToolingSettings.HBM2DDL_AUTO, Action.ACTION_CREATE_THEN_DROP);
+            settings.put(BatchSettings.ORDER_UPDATES, true);
+            settings.put(BatchSettings.ORDER_INSERTS, true);
+            settings.put(BatchSettings.STATEMENT_BATCH_SIZE, 20);
+            settings.put(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 
             standardRegistryBuilder.applySettings(settings);
             standardRegistry = standardRegistryBuilder.build();
@@ -90,8 +88,7 @@ public class HibernateUtil {
             return metadata.buildSessionFactory();
         } catch (Exception ex) {
             // Make sure you log the exception, as it might be swallowed
-            System.err.println(
-                    "Initial SessionFactory creation failed." + ex.getMessage());
+            log.error("Initial SessionFactory creation failed. {}", ex.getMessage());
             // The registry would be destroyed by the SessionFactory, but we had
             // trouble
             // building the SessionFactory so destroy it manually.
@@ -159,8 +156,8 @@ public class HibernateUtil {
     private static class CustomSysLogger extends SystemOutQueryLoggingListener {
         @Override
         protected void writeLog(String message) {
-            if (message != null && (message.contains("drop table") || message.contains("create table") || message.contains("alter table")
-                    || message.contains("next value")) || message.contains("drop sequence") || message.contains("create sequence") || message.contains("create global")) {
+            if ((message.contains("drop table") || message.contains("create table") || message.contains("alter table")
+                    || message.contains("next value")) || Objects.requireNonNull(message).contains("drop sequence") || message.contains("create sequence") || message.contains("create global")) {
                 return;
             }
             super.writeLog(message);
@@ -169,7 +166,7 @@ public class HibernateUtil {
 
     // use hibernate to format queries
     private static class PrettyQueryEntryCreator extends DefaultQueryLogEntryCreator {
-        private Formatter formatter = FormatStyle.BASIC.getFormatter();
+        private final Formatter formatter = FormatStyle.BASIC.getFormatter();
 
         @Override
         protected String formatQuery(String query) {

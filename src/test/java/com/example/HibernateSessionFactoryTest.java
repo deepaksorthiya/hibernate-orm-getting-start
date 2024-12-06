@@ -1,3 +1,5 @@
+package com.example;
+
 import com.example.hbutil.HibernateUtil;
 import com.example.model.Event;
 import lombok.extern.slf4j.Slf4j;

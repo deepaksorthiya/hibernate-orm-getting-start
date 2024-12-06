@@ -1,3 +1,5 @@
+package com.example;
+
 import com.example.model.Event;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -49,7 +51,7 @@ class HibernateEntityManagerTest {
     }
 
     @Test
-    public void getEvents() {
+    void getEvents() {
         log.info("Fetching Events.........");
         // now lets pull events from the database and list them
         inTransaction(entityManager -> entityManager.createQuery("select e from Event e", Event.class).getResultList()

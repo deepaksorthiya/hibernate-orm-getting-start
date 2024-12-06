@@ -1,3 +1,5 @@
+package com.example;
+
 import com.example.hbutil.HibernateUtil;
 import com.example.model.Post;
 import com.example.model.PostComment;

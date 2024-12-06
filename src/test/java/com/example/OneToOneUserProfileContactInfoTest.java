@@ -1,3 +1,5 @@
+package com.example;
+
 import com.example.hbutil.HibernateUtil;
 import com.example.onetone.ContactInfo;
 import com.example.onetone.UserProfile;
