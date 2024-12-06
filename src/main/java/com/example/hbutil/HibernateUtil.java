@@ -154,11 +154,22 @@ public class HibernateUtil {
     }
 
     private static class CustomSysLogger extends SystemOutQueryLoggingListener {
+        private static final Set<String> skipQueriesToLog = Set.of(
+                "create table",
+                "drop table",
+                "alter table",
+                "create sequence",
+                "drop sequence",
+                "next value",
+                "create global"
+        );
+
         @Override
         protected void writeLog(String message) {
-            if ((message.contains("drop table") || message.contains("create table") || message.contains("alter table")
-                    || message.contains("next value")) || Objects.requireNonNull(message).contains("drop sequence") || message.contains("create sequence") || message.contains("create global")) {
-                return;
+            for (String query : skipQueriesToLog) {
+                if (message.contains(query)) {
+                    return;
+                }
             }
             super.writeLog(message);
         }

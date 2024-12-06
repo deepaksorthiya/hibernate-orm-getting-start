@@ -62,7 +62,14 @@ class OneToOneUserProfileContactInfoTest {
         //remove event
         sessionFactory.inTransaction(session -> {
             UserProfile userProfile = session.find(UserProfile.class, 2L);
-            session.remove(userProfile.getContactInfo());
+            log.info("UserProfile: {}", userProfile);
+            if (userProfile != null) {
+                ContactInfo contactInfo = userProfile.getContactInfo();
+                if (contactInfo != null) {
+                    // only remove if exist otherwise exception
+                    session.remove(contactInfo);
+                }
+            }
         });
         log.info("Removing ChildContactInfo End.........");
     }
