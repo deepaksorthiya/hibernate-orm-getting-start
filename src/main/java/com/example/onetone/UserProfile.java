@@ -12,7 +12,7 @@ import lombok.*;
 public class UserProfile {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue // comment this if you want to set ID manually
     private Long id;
     private String firstName;
     private String lastName;

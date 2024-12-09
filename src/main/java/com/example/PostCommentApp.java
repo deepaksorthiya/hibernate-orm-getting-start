@@ -1,9 +1,11 @@
 package com.example;
 
 import com.example.hbutil.HibernateUtil;
-import com.example.model.Post;
-import com.example.model.PostComment;
+import com.example.onetomany.Post;
+import com.example.onetomany.PostComment;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class PostCommentApp {
 
     public static void main(String[] args) {
@@ -33,7 +35,7 @@ public class PostCommentApp {
         HibernateUtil.getSessionFactory(new Class[]{Post.class, PostComment.class}).inTransaction(session -> {
             Post post = session.find(Post.class, 1L);
             PostComment comment = post.getComments().get(0);
-            System.out.println(comment);
+            log.info("Comment :: {}", comment);
         });
 
     }
