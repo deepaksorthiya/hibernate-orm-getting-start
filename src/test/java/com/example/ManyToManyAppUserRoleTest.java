@@ -52,6 +52,11 @@ class ManyToManyAppUserRoleTest {
             appUser3.addRole(userRole);
             appUser3.addRole(adminRole);
             session.persist(appUser3);
+
+            AppUser appUser4 = new AppUser("fourthuser@gmgg.com", "fourthuser", "fourthuser", "fourthuser");
+            appUser4.addRole(userRole);
+            appUser4.addRole(adminRole);
+            session.persist(appUser4);
         });
 
     }
@@ -96,6 +101,31 @@ class ManyToManyAppUserRoleTest {
             assertEquals(1, roles.size());
         });
         log.info("Removing ChildRole End.........");
+    }
+
+    @Test
+    void removeChildRoleWrongWay() {
+        log.info("Removing ChildRole Wrong Start.........");
+        //remove event
+        sessionFactory.inTransaction(session -> {
+            AppUser appUser = session.createQuery("""
+                            select u
+                            from AppUser u
+                            join fetch u.roles
+                            where u.userId = :userId
+                            """, AppUser.class)
+                    .setParameter("userId", 4L)
+                    .getSingleResult();
+            Set<Role> roles = appUser.getRoles();
+            for (Role role : roles) {
+                if ("ROLE_ADMIN".equals(role.getRoleName())) {
+                    appUser.removeRole(role);
+                    break;
+                }
+            }
+            assertEquals(1, roles.size());
+        });
+        log.info("Removing ChildRole Wrong End.........");
     }
 
     @Test
