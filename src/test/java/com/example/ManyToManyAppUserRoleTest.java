@@ -38,6 +38,8 @@ class ManyToManyAppUserRoleTest {
             session.persist(userRole);
             session.persist(adminRole);
 
+            log.info("Role not equals : {}", userRole.equals(adminRole));
+
             AppUser appUser1 = new AppUser("firstuser@gmgg.com", "firstuser", "firstuser", "firstuser");
             appUser1.addRole(userRole);
             appUser1.addRole(adminRole);

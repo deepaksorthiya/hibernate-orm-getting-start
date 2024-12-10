@@ -3,12 +3,16 @@ package com.example;
 import com.example.hbutil.HibernateUtil;
 import com.example.manytomany.Address;
 import com.example.manytomany.Person;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class ManyToManyPersonAddressTest {
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+@Slf4j
+class ManyToManyPersonAddressTest {
     private static SessionFactory sessionFactory;
 
     @BeforeAll
@@ -26,10 +30,11 @@ public class ManyToManyPersonAddressTest {
         sessionFactory.inTransaction(session -> {
             Person person1 = new Person("ABC-123");
             Person person2 = new Person("DEF-456");
+            log.info("Person not equals : {}", person1.equals(person2));
 
             Address address1 = new Address("12th Avenue", "12A", "4005A");
             Address address2 = new Address("18th Avenue", "18B", "4007B");
-
+            log.info("Address not equals : {}", address1.equals(address2));
             person1.addAddress(address1);
             person1.addAddress(address2);
 
@@ -46,6 +51,7 @@ public class ManyToManyPersonAddressTest {
             Person person = session.get(Person.class, 1);
             Address address = person.getAddresses().get(0);
             person.removeAddress(address);
+            assertNotNull(person);
         });
     }
 }
