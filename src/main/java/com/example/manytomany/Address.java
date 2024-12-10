@@ -3,6 +3,7 @@ package com.example.manytomany;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @Entity(name = "Address")
-public class Address {
+public class Address implements Serializable {
 
     @Id
     @GeneratedValue
@@ -27,14 +28,20 @@ public class Address {
     private String postalCode;
 
     @ToString.Exclude
-    @ManyToMany(mappedBy = "addresses")
-    private List<Person> owners = new ArrayList<>();
+    @OneToMany(
+            mappedBy = "address",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<PersonAddress> owners = new ArrayList<>();
 
     public Address(String street, String number, String postalCode) {
         this.street = street;
         this.number = number;
         this.postalCode = postalCode;
     }
+
+    //Getters and setters are omitted for brevity
 
     @Override
     public boolean equals(Object o) {

@@ -6,7 +6,7 @@ import com.example.onetomany.PostComment;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class PostCommentApp {
+public class OneToManyPostCommentApp {
 
     public static void main(String[] args) {
         savePost();

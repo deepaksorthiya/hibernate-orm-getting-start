@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class PostCommentAppTest {
+class ManyToManyPersonAddressAppTest {
 
-    private final PostCommentApp app = new PostCommentApp();
+    private final ManyToManyPersonAddressApp app = new ManyToManyPersonAddressApp();
 
     @Test
     void main() {
-        PostCommentApp.main(null);
+        ManyToManyPersonAddressApp.main(null);
         assertNotNull(app);
     }
 }

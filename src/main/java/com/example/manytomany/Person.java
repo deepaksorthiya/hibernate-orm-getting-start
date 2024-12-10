@@ -24,21 +24,31 @@ public class Person {
     private String registrationNumber;
 
     @ToString.Exclude
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Address> addresses = new ArrayList<>();
+    @OneToMany(
+            mappedBy = "person",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<PersonAddress> addresses = new ArrayList<>();
 
     public Person(String registrationNumber) {
         this.registrationNumber = registrationNumber;
     }
 
+    //Getters and setters are omitted for brevity
+
     public void addAddress(Address address) {
-        addresses.add(address);
-        address.getOwners().add(this);
+        PersonAddress personAddress = new PersonAddress(this, address);
+        addresses.add(personAddress);
+        address.getOwners().add(personAddress);
     }
 
     public void removeAddress(Address address) {
-        addresses.remove(address);
-        address.getOwners().remove(this);
+        PersonAddress personAddress = new PersonAddress(this, address);
+        address.getOwners().remove(personAddress);
+        addresses.remove(personAddress);
+        personAddress.setPerson(null);
+        personAddress.setAddress(null);
     }
 
     @Override
