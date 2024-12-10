@@ -32,17 +32,17 @@ class OneToOneUserProfileContactInfoTest {
         sessionFactory.inTransaction(session -> {
             UserProfile userProfile1 = new UserProfile(null, "firstUser", "firstUser", "firstUser@gmail.com", null);
             ContactInfo contactInfo1 = new ContactInfo(null, "1111111", "432 Ab", null);
-            userProfile1.setDetails(contactInfo1);
+            userProfile1.setContactDetails(contactInfo1);
             session.persist(userProfile1);
 
             UserProfile userProfile2 = new UserProfile(null, "secondUser", "secondUser", "secondUser@gmail.com", null);
             ContactInfo contactInfo2 = new ContactInfo(null, "222222", "432 Ab", null);
-            userProfile2.setDetails(contactInfo2);
+            userProfile2.setContactDetails(contactInfo2);
             session.persist(userProfile2);
 
             UserProfile userProfile3 = new UserProfile(null, "thirdUser", "thirdUser", "thirdUser@gmail.com", null);
             ContactInfo contactInfo3 = new ContactInfo(null, "3333333", "432 Ab", null);
-            userProfile3.setDetails(contactInfo3);
+            userProfile3.setContactDetails(contactInfo3);
             session.persist(userProfile3);
         });
 
@@ -86,7 +86,7 @@ class OneToOneUserProfileContactInfoTest {
         sessionFactory.inTransaction(session -> {
             UserProfile userProfile = session.find(UserProfile.class, 3L);
             assertNotNull(userProfile);
-            userProfile.setDetails(null);
+            userProfile.setContactDetails(null);
         });
         log.info("Removing ChildContactInfo Without Remove End.........");
     }

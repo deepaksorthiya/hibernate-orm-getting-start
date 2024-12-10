@@ -13,7 +13,7 @@ public class OneToOneApp {
             HibernateUtil.getSessionFactory(new Class[]{UserProfile.class, ContactInfo.class}).inTransaction(session -> {
                 UserProfile userProfile = new UserProfile(null, "firstUser", "firstUser", "firstuser@gmail.com", null);
                 ContactInfo contactInfo = new ContactInfo(null, "999999", "432 Ab", null);
-                userProfile.setDetails(contactInfo);
+                userProfile.setContactDetails(contactInfo);
                 session.persist(userProfile);
             });
 
