@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.hbutil.Database;
 import com.example.hbutil.HibernateUtil;
 import com.example.onetomany.Post;
 import com.example.onetomany.PostComment;
@@ -19,7 +20,7 @@ class OneToManyPostCommentTest {
 
     @BeforeAll
     static void setUp() {
-        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{Post.class, PostComment.class});
+        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{Post.class, PostComment.class}, Database.H2);
         insertInitRecords();
     }
 

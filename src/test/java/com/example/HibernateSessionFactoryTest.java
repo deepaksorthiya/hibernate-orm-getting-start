@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.hbutil.Database;
 import com.example.hbutil.HibernateUtil;
 import com.example.model.Event;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ class HibernateSessionFactoryTest {
 
     @BeforeAll
     static void setUp() {
-        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{Event.class});
+        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{Event.class}, Database.H2);
         insertInitRecords();
     }
 

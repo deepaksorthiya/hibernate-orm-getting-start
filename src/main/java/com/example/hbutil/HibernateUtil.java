@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.ttddyy.dsproxy.listener.logging.DefaultQueryLogEntryCreator;
 import net.ttddyy.dsproxy.listener.logging.SystemOutQueryLoggingListener;
 import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
-import org.h2.jdbcx.JdbcDataSource;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -35,9 +34,9 @@ public class HibernateUtil {
         throw new IllegalAccessException("This is utility method, cannot create object");
     }
 
-    public static synchronized SessionFactory getSessionFactory(Class<?>[] classes) {
+    public static synchronized SessionFactory getSessionFactory(Class<?>[] classes, Database database) {
         if (sessionFactory == null) {
-            sessionFactory = buildSessionFactory(classes);
+            sessionFactory = buildSessionFactory(classes, database);
         }
         return sessionFactory;
     }
@@ -57,12 +56,12 @@ public class HibernateUtil {
         closeable.clear();
     }
 
-    private static SessionFactory buildSessionFactory(Class<?>[] classes) {
+    private static SessionFactory buildSessionFactory(Class<?>[] classes, Database database) {
         StandardServiceRegistry standardRegistry = null;
         try {
             StandardServiceRegistryBuilder standardRegistryBuilder = new StandardServiceRegistryBuilder();
             Map<String, Object> settings = new HashMap<>();
-            settings.put(JdbcSettings.JAKARTA_JTA_DATASOURCE, getDataSource());
+            settings.put(JdbcSettings.JAKARTA_JTA_DATASOURCE, getDataSource(database));
 //            settings.put(JdbcSettings.SHOW_SQL, "true");
 //            settings.put(JdbcSettings.FORMAT_SQL, "true");
 //            settings.put(JdbcSettings.HIGHLIGHT_SQL, "true");
@@ -97,7 +96,7 @@ public class HibernateUtil {
         }
     }
 
-    private static DataSource getDataSource() {
+    private static DataSource getDataSource(Database database) {
         // use pretty formatted query with multiline enabled
         PrettyQueryEntryCreator creator = new PrettyQueryEntryCreator();
         creator.setMultiline(true);
@@ -105,10 +104,10 @@ public class HibernateUtil {
         listener.setQueryLogEntryCreator(creator);
 
         //actual datasource
-        DataSource h2DataSource = getH2DataSource();
+        DataSource dataSource = database.getDataSource();
 
         // Create ProxyDataSource
-        DataSource proxyDatasource = ProxyDataSourceBuilder.create(h2DataSource)
+        DataSource proxyDatasource = ProxyDataSourceBuilder.create(dataSource)
                 .name("ProxyDataSource")
                 .countQuery()
                 .multiline()
@@ -142,14 +141,6 @@ public class HibernateUtil {
 
         HikariDataSource ds = new HikariDataSource(config);
         closeable.add(ds::close);
-        return ds;
-    }
-
-    private static DataSource getH2DataSource() {
-        JdbcDataSource ds = new JdbcDataSource();
-        ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
-        ds.setUser("sa");
-        ds.setPassword("");
         return ds;
     }
 

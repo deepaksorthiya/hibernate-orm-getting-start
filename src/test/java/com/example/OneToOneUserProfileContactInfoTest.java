@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.hbutil.Database;
 import com.example.hbutil.HibernateUtil;
 import com.example.onetone.ContactInfo;
 import com.example.onetone.UserProfile;
@@ -19,7 +20,7 @@ class OneToOneUserProfileContactInfoTest {
 
     @BeforeAll
     static void setUp() {
-        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{UserProfile.class, ContactInfo.class});
+        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{UserProfile.class, ContactInfo.class}, Database.H2);
         insertInitRecords();
     }
 

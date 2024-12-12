@@ -1,9 +1,11 @@
 package com.example;
 
+import com.example.hbutil.Database;
 import com.example.hbutil.HibernateUtil;
 import com.example.manytomany.AppUser;
 import com.example.manytomany.Role;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.SessionFactory;
 
 import java.util.Set;
 
@@ -12,7 +14,9 @@ public class ManyToManyAppUserRoleApp {
 
     public static void main(String[] args) {
         try {
-            HibernateUtil.getSessionFactory(new Class[]{AppUser.class, Role.class}).inTransaction(session -> {
+
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory(new Class[]{AppUser.class, Role.class}, Database.H2);
+            sessionFactory.inTransaction(session -> {
                 Role userRole = new Role("ROLE_USER", "ROLE USER DESCRIPTION");
                 Role adminRole = new Role("ROLE_ADMIN", "ROLE ADMIN DESCRIPTION");
 
@@ -25,7 +29,7 @@ public class ManyToManyAppUserRoleApp {
                 session.persist(appUser1);
             });
 
-            HibernateUtil.getSessionFactory(new Class[]{AppUser.class, Role.class}).inTransaction(session -> {
+            sessionFactory.inTransaction(session -> {
                 AppUser appUser = session.createQuery("""
                                 select u
                                 from AppUser u
@@ -47,7 +51,7 @@ public class ManyToManyAppUserRoleApp {
                 log.info("AppUser :: {}", appUser);
             });
 
-            HibernateUtil.getSessionFactory(new Class[]{AppUser.class, Role.class}).inTransaction(session -> {
+            sessionFactory.inTransaction(session -> {
                 AppUser appUser = session.find(AppUser.class, 1L);
                 session.remove(appUser);
             });

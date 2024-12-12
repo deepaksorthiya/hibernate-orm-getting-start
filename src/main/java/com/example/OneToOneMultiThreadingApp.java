@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.hbutil.Database;
 import com.example.hbutil.HibernateUtil;
 import com.example.onetone.ContactInfo;
 import com.example.onetone.UserProfile;
@@ -15,7 +16,7 @@ public class OneToOneMultiThreadingApp {
 
     public static void main(String[] args) throws InterruptedException {
         ExecutorService executor = null;
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory(new Class[]{UserProfile.class, ContactInfo.class});
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory(new Class[]{UserProfile.class, ContactInfo.class}, Database.H2);
         try {
             executor = Executors.newFixedThreadPool(100);
             for (int i = 0; i < 100; i++) {

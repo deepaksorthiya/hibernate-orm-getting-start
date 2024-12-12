@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.hbutil.Database;
 import com.example.hbutil.HibernateUtil;
 import com.example.manytomany.AppUser;
 import com.example.manytomany.Role;
@@ -21,7 +22,7 @@ class ManyToManyAppUserRoleTest {
 
     @BeforeAll
     static void setUp() {
-        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{AppUser.class, Role.class});
+        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{AppUser.class, Role.class}, Database.H2);
         insertInitRecords();
     }
 

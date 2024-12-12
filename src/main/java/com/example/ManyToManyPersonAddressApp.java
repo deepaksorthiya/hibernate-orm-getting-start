@@ -1,10 +1,12 @@
 package com.example;
 
+import com.example.hbutil.Database;
 import com.example.hbutil.HibernateUtil;
 import com.example.manytomany.Address;
 import com.example.manytomany.Person;
 import com.example.manytomany.PersonAddress;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 
@@ -13,7 +15,8 @@ public class ManyToManyPersonAddressApp {
 
     public static void main(String[] args) {
         try {
-            HibernateUtil.getSessionFactory(new Class[]{Person.class, Address.class, PersonAddress.class}).inTransaction(session -> {
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory(new Class[]{Person.class, Address.class, PersonAddress.class}, Database.H2);
+            sessionFactory.inTransaction(session -> {
                 Person person1 = new Person("ABC-123");
                 Person person2 = new Person("DEF-456");
 
@@ -35,7 +38,7 @@ public class ManyToManyPersonAddressApp {
                 session.persist(person2);
             });
 
-            HibernateUtil.getSessionFactory(new Class[]{Person.class, Address.class, PersonAddress.class}).inTransaction(session -> {
+            sessionFactory.inTransaction(session -> {
                 log.info("Removing address");
                 Person person = session.createQuery("""
                                 select p

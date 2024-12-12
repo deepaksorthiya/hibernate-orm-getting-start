@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.hbutil.Database;
 import com.example.hbutil.HibernateUtil;
 import com.example.manytomany.Address;
 import com.example.manytomany.Person;
@@ -18,7 +19,7 @@ class ManyToManyPersonAddressTest {
 
     @BeforeAll
     static void setUp() {
-        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{Person.class, Address.class, PersonAddress.class});
+        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{Person.class, Address.class, PersonAddress.class}, Database.H2);
         insertInitRecords();
     }
 
