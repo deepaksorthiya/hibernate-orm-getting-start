@@ -3,6 +3,7 @@ package com.example.manytomany;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.*;
 
 import java.io.Serializable;
@@ -13,7 +14,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@Entity(name = "PersonAddress")
+@Entity
+@Table(name = "person_address")
 public class PersonAddress implements Serializable {
 
     @Id
@@ -36,7 +38,7 @@ public class PersonAddress implements Serializable {
         }
         PersonAddress that = (PersonAddress) o;
         return Objects.equals(person, that.person) &&
-                Objects.equals(address, that.address);
+               Objects.equals(address, that.address);
     }
 
     @Override

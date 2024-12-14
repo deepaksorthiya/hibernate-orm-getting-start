@@ -11,10 +11,7 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.AvailableSettings;
-import org.hibernate.cfg.BatchSettings;
-import org.hibernate.cfg.JdbcSettings;
-import org.hibernate.cfg.SchemaToolingSettings;
+import org.hibernate.cfg.*;
 import org.hibernate.engine.jdbc.internal.FormatStyle;
 import org.hibernate.engine.jdbc.internal.Formatter;
 import org.hibernate.tool.schema.Action;
@@ -72,6 +69,7 @@ public class HibernateUtil {
             settings.put(BatchSettings.ORDER_INSERTS, true);
             settings.put(BatchSettings.STATEMENT_BATCH_SIZE, 20);
             settings.put(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+            settings.put(MappingSettings.PHYSICAL_NAMING_STRATEGY, "io.hypersistence.utils.hibernate.naming.CamelCaseToSnakeCaseNamingStrategy");
 
             standardRegistryBuilder.applySettings(settings);
             standardRegistry = standardRegistryBuilder.build();

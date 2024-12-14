@@ -13,7 +13,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@Entity(name = "Person")
+@Entity
+@Table(name = "person")
 public class Person {
 
     @Id
