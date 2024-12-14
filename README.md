@@ -3,6 +3,7 @@
 ## Requirements:
 
 ```
+Git: 2.47.1
 Hibernate: 6.6.3.Final
 H2 Database: 2.3.232
 Maven: 3.9+

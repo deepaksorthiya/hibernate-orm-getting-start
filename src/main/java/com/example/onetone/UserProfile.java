@@ -9,6 +9,7 @@ import lombok.*;
 @Setter
 @ToString
 @Entity
+@Table(name = "user_profile")
 public class UserProfile {
 
     @Id

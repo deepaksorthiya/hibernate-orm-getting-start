@@ -14,27 +14,25 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(
-        name = "ROLES",
+        name = "roles",
         uniqueConstraints = {
-                @UniqueConstraint(name = "UQ_ROLES_ROLE_NAME", columnNames = {"roleName"})
+                @UniqueConstraint(name = "UQ_roles_role_name", columnNames = {"role_name"})
         })
 public class Role {
 
     @Id
     @GeneratedValue
     private Long roleId;
-
     private String roleName;
-
     private String roleDesc;
 
     @ToString.Exclude
     @ManyToMany(mappedBy = "roles")
     private Set<AppUser> appUsers = new HashSet<>();
 
-    public Role(String roleName, String roleUserDescription) {
+    public Role(String roleName, String roleDesc) {
         this.roleName = roleName;
-        this.roleDesc = roleUserDescription;
+        this.roleDesc = roleDesc;
     }
 
     @Override

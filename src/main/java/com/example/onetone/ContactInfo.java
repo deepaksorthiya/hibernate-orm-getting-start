@@ -9,6 +9,7 @@ import lombok.*;
 @Setter
 @ToString
 @Entity
+@Table(name = "contact_info")
 public class ContactInfo {
 
     @Id

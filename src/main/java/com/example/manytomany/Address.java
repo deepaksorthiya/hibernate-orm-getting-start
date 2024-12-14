@@ -13,7 +13,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@Entity(name = "Address")
+@Entity
+@Table(name = "address")
 public class Address implements Serializable {
 
     @Id
@@ -22,7 +23,6 @@ public class Address implements Serializable {
 
     private String street;
 
-    @Column(name = "`number`")
     private String number;
 
     private String postalCode;
@@ -53,8 +53,8 @@ public class Address implements Serializable {
         }
         Address address = (Address) o;
         return Objects.equals(street, address.street) &&
-                Objects.equals(number, address.number) &&
-                Objects.equals(postalCode, address.postalCode);
+               Objects.equals(number, address.number) &&
+               Objects.equals(postalCode, address.postalCode);
     }
 
     @Override

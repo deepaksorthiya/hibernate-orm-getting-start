@@ -27,7 +27,7 @@
         <logback.version>1.5.12</logback.version>
         <datasource.proxy.version>1.10.1</datasource.proxy.version>
         <hikariCP.version>6.2.1</hikariCP.version>
-
+        <hypersistence-utils.version>3.9.0</hypersistence-utils.version>
         <sonar.organization>deepaksorthiya</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
@@ -75,6 +75,11 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.hypersistence</groupId>
+            <artifactId>hypersistence-utils-hibernate-63</artifactId>
+            <version>${hypersistence-utils.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
