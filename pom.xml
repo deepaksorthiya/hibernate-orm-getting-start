@@ -27,6 +27,7 @@
         <logback.version>1.5.12</logback.version>
         <datasource.proxy.version>1.10.1</datasource.proxy.version>
         <hikariCP.version>6.2.1</hikariCP.version>
+        <testcontainer.version>1.19.8</testcontainer.version>
         <hypersistence-utils.version>3.9.0</hypersistence-utils.version>
         <sonar.organization>deepaksorthiya</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -100,6 +101,16 @@
             <groupId>net.ttddyy</groupId>
             <artifactId>datasource-proxy</artifactId>
             <version>${datasource.proxy.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>${testcontainer.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${testcontainer.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
