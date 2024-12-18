@@ -18,16 +18,16 @@
         <maven.sonar.plugin.version>5.0.0.4389</maven.sonar.plugin.version>
         <maven.jacoco.plugin.version>0.8.12</maven.jacoco.plugin.version>
 
-        <hibernate.orm.version>6.6.3.Final</hibernate.orm.version>
+        <hibernate.orm.version>6.6.4.Final</hibernate.orm.version>
         <junit.bom.version>5.11.4</junit.bom.version>
         <h2db.version>2.3.232</h2db.version>
         <mysqldb.version>9.1.0</mysqldb.version>
         <postgresdb.version>42.7.4</postgresdb.version>
         <lombok.version>1.18.36</lombok.version>
-        <logback.version>1.5.12</logback.version>
+        <logback.version>1.5.15</logback.version>
         <datasource.proxy.version>1.10.1</datasource.proxy.version>
         <hikariCP.version>6.2.1</hikariCP.version>
-        <testcontainer.version>1.19.8</testcontainer.version>
+        <testcontainer.version>1.20.4</testcontainer.version>
         <hypersistence-utils.version>3.9.0</hypersistence-utils.version>
         <sonar.organization>deepaksorthiya</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>

@@ -2,6 +2,7 @@ package com.example.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SoftDelete;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "events")
+@SoftDelete
 public class Event {
 
     @Id
