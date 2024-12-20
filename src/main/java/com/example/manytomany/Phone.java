@@ -2,6 +2,7 @@ package com.example.manytomany;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SoftDelete;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.Objects;
 @ToString
 @Entity
 @Table(name = "phone")
+@SoftDelete
 public class Phone implements Serializable {
 
     @Id
