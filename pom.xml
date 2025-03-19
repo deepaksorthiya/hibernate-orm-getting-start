@@ -24,7 +24,7 @@
         <mysqldb.version>9.2.0</mysqldb.version>
         <postgresdb.version>42.7.5</postgresdb.version>
         <lombok.version>1.18.36</lombok.version>
-        <logback.version>1.5.17</logback.version>
+        <logback.version>1.5.18</logback.version>
         <datasource.proxy.version>1.10.1</datasource.proxy.version>
         <hikariCP.version>6.2.1</hikariCP.version>
         <testcontainer.version>1.20.5</testcontainer.version>
