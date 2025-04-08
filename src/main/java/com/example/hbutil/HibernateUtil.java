@@ -2,6 +2,7 @@ package com.example.hbutil;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import jakarta.persistence.ValidationMode;
 import lombok.extern.slf4j.Slf4j;
 import net.ttddyy.dsproxy.listener.logging.DefaultQueryLogEntryCreator;
 import net.ttddyy.dsproxy.listener.logging.SystemOutQueryLoggingListener;
@@ -70,6 +71,7 @@ public class HibernateUtil {
             settings.put(BatchSettings.STATEMENT_BATCH_SIZE, 20);
             settings.put(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "thread");
             settings.put(MappingSettings.PHYSICAL_NAMING_STRATEGY, io.hypersistence.utils.hibernate.naming.CamelCaseToSnakeCaseNamingStrategy.INSTANCE);
+            settings.put(ValidationSettings.JAKARTA_VALIDATION_MODE, ValidationMode.NONE);
 
             standardRegistryBuilder.applySettings(settings);
             standardRegistry = standardRegistryBuilder.build();
