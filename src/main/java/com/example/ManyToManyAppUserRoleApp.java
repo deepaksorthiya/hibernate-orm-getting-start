@@ -27,6 +27,11 @@ public class ManyToManyAppUserRoleApp {
                 appUser1.addRole(userRole);
                 appUser1.addRole(adminRole);
                 session.persist(appUser1);
+
+                AppUser appUser2 = new AppUser("second@gmgg.com", "seconduser", "seconduser", "seconduser");
+                appUser2.addRole(userRole);
+                appUser2.addRole(adminRole);
+                session.persist(appUser2);
             });
 
             sessionFactory.inTransaction(session -> {
@@ -40,11 +45,10 @@ public class ManyToManyAppUserRoleApp {
                         .getSingleResult();
                 Role role = session.find(Role.class, 2L);
                 Set<Role> roles = appUser.getRoles();
-                for (Role r : roles) {
-                    if (r.equals(role)) {
-                        roles.remove(r);
-                    }
-                }
+                // remove role from given user
+                roles.remove(role);
+
+                // add role to given user
                 Role manager = new Role("ROLE_MANAGER", "ROLE MANAGER DESCRIPTION");
                 session.persist(manager);
                 roles.add(manager);
@@ -52,8 +56,14 @@ public class ManyToManyAppUserRoleApp {
             });
 
             sessionFactory.inTransaction(session -> {
-                AppUser appUser = session.find(AppUser.class, 1L);
-                session.remove(appUser);
+                // remove role and its mapping with user not user
+                int count = session.createMutationQuery("""
+                                delete from Role r
+                                where r.roleId = :roleId
+                                """)
+                        .setParameter("roleId", 1L)
+                        .executeUpdate();
+                log.info("Row Count :: {}", count);
             });
         } finally {
             HibernateUtil.shutdown();

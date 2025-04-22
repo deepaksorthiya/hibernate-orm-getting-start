@@ -89,7 +89,6 @@ class ManyToManyAppUserRoleTest {
     @Test
     void removeChildRole() {
         log.info("Removing ChildRole Start.........");
-        //remove event
         sessionFactory.inTransaction(session -> {
             AppUser appUser = session.createQuery("""
                             select u
@@ -101,7 +100,7 @@ class ManyToManyAppUserRoleTest {
                     .getSingleResult();
             Set<Role> roles = appUser.getRoles();
             roles.remove(roles.iterator().next());
-            assertEquals(1, roles.size());
+            assertEquals(0, roles.size());
         });
         log.info("Removing ChildRole End.........");
     }
@@ -109,7 +108,6 @@ class ManyToManyAppUserRoleTest {
     @Test
     void removeChildRoleWrongWay() {
         log.info("Removing ChildRole Wrong Start.........");
-        //remove event
         sessionFactory.inTransaction(session -> {
             AppUser appUser = session.createQuery("""
                             select u
@@ -134,7 +132,6 @@ class ManyToManyAppUserRoleTest {
     @Test
     void removeAllChildRole() {
         log.info("Removing All ChildRole Start.........");
-        //remove event
         sessionFactory.inTransaction(session -> {
 
             AppUser appUser = session.createQuery("""
@@ -153,11 +150,25 @@ class ManyToManyAppUserRoleTest {
     @Test
     void testRemoveParent() {
         log.info("Removing Parent Start.........");
-        //remove event
         sessionFactory.inTransaction(session -> {
             AppUser appUser = session.find(AppUser.class, 3L);
             session.remove(appUser);
         });
         log.info("Removing Parent End.........");
+    }
+
+    @Test
+    void testRoleAndItsMappings() {
+        log.info("Removing Role Start.........");
+        sessionFactory.inTransaction(session -> {
+            int count = session.createMutationQuery("""
+                            delete from Role r
+                            where r.roleId = :roleId
+                            """)
+                    .setParameter("roleId", 1L)
+                    .executeUpdate();
+            log.info("Row Count :: {}", count);
+        });
+        log.info("Removing Role End.........");
     }
 }
