@@ -4,6 +4,7 @@ import com.example.hbutil.Database;
 import com.example.hbutil.HibernateUtil;
 import com.example.manytomany.AppUser;
 import com.example.manytomany.Role;
+import com.example.manytomany.UserGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 
@@ -15,7 +16,7 @@ public class ManyToManyAppUserRoleApp {
     public static void main(String[] args) {
         try {
 
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory(new Class[]{AppUser.class, Role.class}, Database.H2);
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory(new Class[]{UserGroup.class, AppUser.class, Role.class}, Database.H2);
             sessionFactory.inTransaction(session -> {
                 Role userRole = new Role("ROLE_USER", "ROLE USER DESCRIPTION");
                 Role adminRole = new Role("ROLE_ADMIN", "ROLE ADMIN DESCRIPTION");
@@ -23,17 +24,48 @@ public class ManyToManyAppUserRoleApp {
                 session.persist(userRole);
                 session.persist(adminRole);
 
-                AppUser appUser1 = new AppUser("firstuser@gmgg.com", "firstuser", "firstuser", "firstuser");
-                appUser1.addRole(userRole);
-                appUser1.addRole(adminRole);
-                session.persist(appUser1);
+                AppUser admin1 = new AppUser("admin1@gmgg.com", "admin1", "admin1", "admin1");
+                admin1.addRole(userRole);
+                admin1.addRole(adminRole);
+                session.persist(admin1);
 
-                AppUser appUser2 = new AppUser("second@gmgg.com", "seconduser", "seconduser", "seconduser");
-                appUser2.addRole(userRole);
-                appUser2.addRole(adminRole);
-                session.persist(appUser2);
+                AppUser admin2 = new AppUser("admin2@gmgg.com", "admin2", "admin2", "admin2");
+                admin2.addRole(userRole);
+                admin2.addRole(adminRole);
+                session.persist(admin2);
+
+                AppUser user1 = new AppUser("user1@gmgg.com", "user1", "user1", "user1");
+                user1.addRole(userRole);
+                session.persist(user1);
+
+                UserGroup adminGroup = new UserGroup("admin_group", "admin group description");
+                UserGroup userGroup = new UserGroup("user_group", "user group description");
+
+                adminGroup.addAppUser(admin1);
+                adminGroup.addAppUser(admin2);
+                userGroup.addAppUser(user1);
+
+                session.persist(adminGroup);
+                session.persist(userGroup);
             });
 
+
+            // get user group by ID
+            UserGroup userGroup = sessionFactory.fromTransaction((session -> session.get(UserGroup.class, 1)));
+            log.info("userGroup: {}", userGroup);
+
+            // Get Role and its users
+            Role userR = sessionFactory.fromTransaction(session -> session.createQuery("""
+                            select r
+                            from Role r
+                            join fetch r.appUsers
+                            where r.roleId = :roleId
+                            """, Role.class)
+                    .setParameter("roleId", 1L)
+                    .getSingleResult());
+            log.info("role: {}", userR);
+
+            // add-remove role to users efficiently
             sessionFactory.inTransaction(session -> {
                 AppUser appUser = session.createQuery("""
                                 select u
@@ -55,8 +87,8 @@ public class ManyToManyAppUserRoleApp {
                 log.info("AppUser :: {}", appUser);
             });
 
+            // remove role and its mapping with user not user
             sessionFactory.inTransaction(session -> {
-                // remove role and its mapping with user not user
                 int count = session.createMutationQuery("""
                                 delete from Role r
                                 where r.roleId = :roleId

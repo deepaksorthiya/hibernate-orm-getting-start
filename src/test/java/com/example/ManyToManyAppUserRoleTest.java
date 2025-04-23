@@ -4,6 +4,7 @@ import com.example.hbutil.Database;
 import com.example.hbutil.HibernateUtil;
 import com.example.manytomany.AppUser;
 import com.example.manytomany.Role;
+import com.example.manytomany.UserGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -22,7 +23,7 @@ class ManyToManyAppUserRoleTest {
 
     @BeforeAll
     static void setUp() {
-        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{AppUser.class, Role.class}, Database.H2);
+        sessionFactory = HibernateUtil.getSessionFactory(new Class[]{UserGroup.class, AppUser.class, Role.class}, Database.H2);
         insertInitRecords();
     }
 
