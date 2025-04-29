@@ -21,7 +21,7 @@
         <hibernate.orm.version>6.6.13.Final</hibernate.orm.version>
         <junit.bom.version>5.12.2</junit.bom.version>
         <h2db.version>2.3.232</h2db.version>
-        <mysqldb.version>9.2.0</mysqldb.version>
+        <mysqldb.version>9.3.0</mysqldb.version>
         <postgresdb.version>42.7.5</postgresdb.version>
         <lombok.version>1.18.38</lombok.version>
         <logback.version>1.5.18</logback.version>
