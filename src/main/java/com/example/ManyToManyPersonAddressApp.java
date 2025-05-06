@@ -8,8 +8,6 @@ import com.example.manytomany.PersonAddress;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 
-import java.util.List;
-
 @Slf4j
 public class ManyToManyPersonAddressApp {
 
@@ -40,17 +38,13 @@ public class ManyToManyPersonAddressApp {
 
             sessionFactory.inTransaction(session -> {
                 log.info("Removing address");
-                Person person = session.createQuery("""
-                                select p
-                                from Person p 
-                                join Address a 
-                                on a.id=a.id
-                                where p.id=:id
-                                """, Person.class)
+                int count = session.createMutationQuery("""
+                                delete from PersonAddress pa 
+                                where pa.person.id=:id and pa.address.id=:id
+                                """)
                         .setParameter("id", 1L)
-                        .getSingleResult();
-                List<PersonAddress> addresses = person.getAddresses();
-                addresses.remove(0);
+                        .executeUpdate();
+                log.info("Count: {}", count);
             });
 
         } finally {
