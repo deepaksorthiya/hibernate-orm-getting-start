@@ -25,10 +25,19 @@
             <!-- Automatically export the schema -->
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
 
+            <!-- Hibernate Statistics-->
+            <property name="hibernate.generate_statistics" value="true"/>
+
+            <!-- Hibernate Batch-->
+            <property name="hibernate.jdbc.batch_size" value="20"/>
+            <property name="hibernate.order_updates" value="true"/>
+            <property name="hibernate.order_inserts" value="true"/>
+            <property name="hibernate.jdbc.batch_versioned_data" value="true"/>
+
             <!-- Echo all executed SQL to console -->
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.highlight_sql" value="true"/>
+            <!--<property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="true"/>-->
 
             <!-- HikariCP configuration -->
             <property name="hibernate.connection.provider_class"

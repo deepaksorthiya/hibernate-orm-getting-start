@@ -25,6 +25,9 @@ public class Event {
     @Column(name = "eventDate")
     private LocalDateTime date;
 
+    @Version
+    private Long version;
+
     public Event(String title, LocalDateTime date) {
         // for application use, to create new events
         this.title = title;

@@ -8,6 +8,7 @@ import com.example.manytomany.UserGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -39,14 +40,20 @@ public class ManyToManyAppUserRoleApp {
                 session.persist(user1);
 
                 UserGroup adminGroup = new UserGroup("admin_group", "admin group description");
+                UserGroup developerGroup = new UserGroup("developer_group", "developer group description");
                 UserGroup userGroup = new UserGroup("user_group", "user group description");
 
                 adminGroup.addAppUser(admin1);
                 adminGroup.addAppUser(admin2);
+                developerGroup.addAppUser(admin1);
+                developerGroup.addAppUser(admin2);
+                userGroup.addAppUser(admin1);
+                userGroup.addAppUser(admin2);
                 userGroup.addAppUser(user1);
 
                 session.persist(adminGroup);
                 session.persist(userGroup);
+                session.persist(developerGroup);
             });
 
 
@@ -54,12 +61,30 @@ public class ManyToManyAppUserRoleApp {
             UserGroup userGroup = sessionFactory.fromTransaction((session -> session.get(UserGroup.class, 1)));
             log.info("userGroup: {}", userGroup);
 
+            // get user and it's all roles and groups
+            sessionFactory.inTransaction(session -> {
+                AppUser appUser = session.createQuery("""
+                                SELECT u
+                                FROM AppUser u
+                                JOIN FETCH u.userGroups g
+                                JOIN FETCH u.roles r
+                                WHERE u.userId = :userId
+                                """, AppUser.class)
+                        .setParameter("userId", 1)
+                        .getSingleResult();
+                Set<UserGroup> userGroups = appUser.getUserGroups();
+                userGroups.remove(userGroups.iterator().next());
+                log.info("AppUser: {}", appUser);
+                log.info("Roles: {}", appUser.getRoles());
+                log.info("Groups: {}", userGroups);
+            });
+
             // Get Role and its users
             Role userR = sessionFactory.fromTransaction(session -> session.createQuery("""
-                            select r
-                            from Role r
-                            join fetch r.appUsers
-                            where r.roleId = :roleId
+                            SELECT r
+                            FROM Role r
+                            JOIN FETCH r.appUsers
+                            WHERE r.roleId = :roleId
                             """, Role.class)
                     .setParameter("roleId", 1L)
                     .getSingleResult());
@@ -68,10 +93,10 @@ public class ManyToManyAppUserRoleApp {
             // add-remove role to users efficiently
             sessionFactory.inTransaction(session -> {
                 AppUser appUser = session.createQuery("""
-                                select u
-                                from AppUser u
-                                join fetch u.roles
-                                where u.userId = :userId
+                                SELECT u
+                                FROM AppUser u
+                                JOIN FETCH u.roles
+                                WHERE u.userId = :userId
                                 """, AppUser.class)
                         .setParameter("userId", 1L)
                         .getSingleResult();
@@ -90,13 +115,45 @@ public class ManyToManyAppUserRoleApp {
             // remove role and its mapping with user not user
             sessionFactory.inTransaction(session -> {
                 int count = session.createMutationQuery("""
-                                delete from Role r
-                                where r.roleId = :roleId
+                                DELETE FROM Role r
+                                WHERE r.roleId = :roleId
                                 """)
                         .setParameter("roleId", 1L)
                         .executeUpdate();
                 log.info("Row Count :: {}", count);
             });
+
+            // remove all groups from a given user
+            sessionFactory.inTransaction(session -> {
+                AppUser appUser = session.createQuery("""
+                                SELECT u
+                                FROM AppUser u
+                                JOIN FETCH u.userGroups g
+                                JOIN FETCH g.appUsers a
+                                WHERE u.userId = :userId
+                                """, AppUser.class)
+                        .setParameter("userId", 1L)
+                        .getSingleResult();
+                Set<UserGroup> userGroups = appUser.getUserGroups();
+                List<UserGroup> ugs = userGroups.stream().toList();
+                for (UserGroup ug : ugs) {
+                    appUser.removeFromGroup(ug);
+                }
+            });
+
+            // remove all groups from a given user
+//            sessionFactory.fromTransaction(session -> {
+//                int count = session.createNativeQuery("""
+//                                DELETE
+//                                FROM users_group_app_users_mapping ugm
+//                                WHERE ugm.user_id = :userId
+//                                """)
+//                        .setParameter("userId", 1L)
+//                        .executeUpdate();
+//                log.info("Row Count :: {}", count);
+//                return count;
+//            });
+
         } finally {
             HibernateUtil.shutdown();
         }

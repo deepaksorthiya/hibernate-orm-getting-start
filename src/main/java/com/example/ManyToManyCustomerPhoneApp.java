@@ -42,7 +42,7 @@ public class ManyToManyCustomerPhoneApp {
             sessionFactory.inTransaction(session -> {
                 log.info("Removing phone");
                 Phone phone = session.find(Phone.class, 1);
-                // this will remove only phone, associated customer and customer_phone row
+                // this will remove phone, associated customer and customer_phone row
                 session.remove(phone);
             });
 

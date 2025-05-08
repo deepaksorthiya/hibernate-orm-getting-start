@@ -64,11 +64,12 @@ public class HibernateUtil {
 //            settings.put(JdbcSettings.FORMAT_SQL, "true");
 //            settings.put(JdbcSettings.HIGHLIGHT_SQL, "true");
 //            settings.put(JdbcSettings.DIALECT, "org.hibernate.dialect.H2Dialect");
-//            settings.put(StatisticsSettings.GENERATE_STATISTICS, true);
+            settings.put(StatisticsSettings.GENERATE_STATISTICS, true);
             settings.put(SchemaToolingSettings.HBM2DDL_AUTO, Action.ACTION_CREATE_THEN_DROP);
             settings.put(BatchSettings.ORDER_UPDATES, true);
             settings.put(BatchSettings.ORDER_INSERTS, true);
             settings.put(BatchSettings.STATEMENT_BATCH_SIZE, 20);
+            settings.put(BatchSettings.BATCH_VERSIONED_DATA, true);
             settings.put(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "thread");
             settings.put(MappingSettings.PHYSICAL_NAMING_STRATEGY, io.hypersistence.utils.hibernate.naming.CamelCaseToSnakeCaseNamingStrategy.INSTANCE);
             settings.put(ValidationSettings.JAKARTA_VALIDATION_MODE, ValidationMode.NONE);

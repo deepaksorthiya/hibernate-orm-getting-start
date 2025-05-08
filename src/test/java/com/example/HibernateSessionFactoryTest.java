@@ -62,7 +62,7 @@ class HibernateSessionFactoryTest {
         log.info("Removing Event.........");
         //remove event
         sessionFactory.inTransaction(session -> {
-            Event event = session.getReference(Event.class, 1);
+            Event event = session.find(Event.class, 1);
             session.remove(event);
         });
         log.info("Removed Event.........");

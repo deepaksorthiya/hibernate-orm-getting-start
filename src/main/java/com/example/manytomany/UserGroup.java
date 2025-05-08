@@ -26,7 +26,10 @@ public class UserGroup {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = AppUser.class)
     @JoinTable(name = "users_group_app_users_mapping",
             joinColumns = @JoinColumn(name = "user_group_id", foreignKey = @ForeignKey(name = "FK_users_group_app_users_mapping_user_group_id")),
-            inverseJoinColumns = @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_users_group_app_users_mapping_user_id"))
+            inverseJoinColumns = @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_users_group_app_users_mapping_user_id")),
+            uniqueConstraints = {
+                    @UniqueConstraint(name = "UQ_users_group_app_users_mapping_user_id_user_group_id", columnNames = {"user_group_id", "user_id"}),
+            }
     )
     private Set<AppUser> appUsers = new HashSet<>();
 
@@ -35,6 +38,7 @@ public class UserGroup {
         this.description = description;
     }
 
+    // Helper methods for bidirectional relationship management
     public void addAppUser(AppUser appUser) {
         this.appUsers.add(appUser);
         appUser.getUserGroups().add(this);

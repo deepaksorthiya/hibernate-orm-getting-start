@@ -2,7 +2,6 @@ package com.example.manytomany;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.SoftDelete;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.Objects;
 @ToString
 @Entity
 @Table(name = "customer")
-@SoftDelete
 public class Customer {
 
     @Id
