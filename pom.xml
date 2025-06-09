@@ -9,7 +9,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
+        <java.version>24</java.version>
 
         <!-- plugin here -->
         <maven.surefire.plugin.version>3.5.3</maven.surefire.plugin.version>
@@ -18,17 +18,17 @@
         <maven.sonar.plugin.version>5.1.0.4751</maven.sonar.plugin.version>
         <maven.jacoco.plugin.version>0.8.13</maven.jacoco.plugin.version>
 
-        <hibernate.orm.version>6.6.15.Final</hibernate.orm.version>
-        <junit.bom.version>5.13.1</junit.bom.version>
+        <hibernate.orm.version>7.0.4.Final</hibernate.orm.version>
+        <junit.bom.version>5.13.2</junit.bom.version>
         <h2db.version>2.3.232</h2db.version>
         <mysqldb.version>9.3.0</mysqldb.version>
-        <postgresdb.version>42.7.6</postgresdb.version>
+        <postgresdb.version>42.7.7</postgresdb.version>
         <lombok.version>1.18.38</lombok.version>
         <logback.version>1.5.18</logback.version>
         <datasource.proxy.version>1.10.1</datasource.proxy.version>
         <hikariCP.version>6.3.0</hikariCP.version>
-        <testcontainer.version>1.21.1</testcontainer.version>
-        <hypersistence-utils.version>3.9.10</hypersistence-utils.version>
+        <testcontainer.version>1.21.3</testcontainer.version>
+        <hypersistence-utils.version>3.10.1</hypersistence-utils.version>
         <sonar.organization>deepaksorthiya</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
@@ -89,7 +89,7 @@
         </dependency>
         <dependency>
             <groupId>io.hypersistence</groupId>
-            <artifactId>hypersistence-utils-hibernate-63</artifactId>
+            <artifactId>hypersistence-utils-hibernate-70</artifactId>
             <version>${hypersistence-utils.version}</version>
         </dependency>
         <dependency>

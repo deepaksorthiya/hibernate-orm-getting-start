@@ -42,10 +42,10 @@ public class ManyToManyPersonAddressApp {
                 List<PersonAddress> personAddresses = session
                         .createQuery(
                                 """
-                                        SELECT pa 
-                                        from PersonAddress pa 
-                                        join fetch pa.person p 
-                                        join fetch pa.address a 
+                                        SELECT pa
+                                        from PersonAddress pa
+                                        join fetch pa.person p
+                                        join fetch pa.address a
                                         where pa.person.id = :id and pa.address.id = :id
                                         """
                                 , PersonAddress.class)

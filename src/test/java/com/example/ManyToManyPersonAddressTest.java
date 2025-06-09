@@ -57,7 +57,7 @@ class ManyToManyPersonAddressTest {
     @Test
     void removeAddressFromPerson() {
         sessionFactory.inTransaction(session -> {
-            Person person = session.get(Person.class, 1);
+            Person person = session.find(Person.class, 1);
             PersonAddress address = person.getAddresses().get(0);
             person.removeAddress(address.getAddress());
             assertNotNull(person);
