@@ -69,7 +69,7 @@ class OneToManyPostCommentTest {
         // now lets pull events from the database and list them
         sessionFactory.inTransaction(session -> {
             Post post = session.createQuery("""
-                            select p 
+                            select p
                             from Post p
                             join fetch p.comments
                             where p.id = :id
@@ -98,7 +98,7 @@ class OneToManyPostCommentTest {
     void testRemoveParent() {
         sessionFactory.inTransaction(entityManager -> {
             Post post = entityManager.createQuery("""
-                            select p 
+                            select p
                             from Post p
                             join fetch p.comments
                             where p.id = :id

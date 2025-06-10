@@ -58,7 +58,7 @@ public class ManyToManyAppUserRoleApp {
 
 
             // get user group by ID
-            UserGroup userGroup = sessionFactory.fromTransaction((session -> session.get(UserGroup.class, 1)));
+            UserGroup userGroup = sessionFactory.fromTransaction((session -> session.find(UserGroup.class, 1)));
             log.info("userGroup: {}", userGroup);
 
             // get user and it's all roles and groups

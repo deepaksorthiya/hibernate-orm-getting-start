@@ -9,7 +9,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
+        <java.version>24</java.version>
 
         <!-- plugin here -->
         <maven.surefire.plugin.version>3.5.3</maven.surefire.plugin.version>
