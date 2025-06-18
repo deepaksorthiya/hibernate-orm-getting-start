@@ -69,7 +69,6 @@ public class HibernateUtil {
             settings.put(BatchSettings.ORDER_UPDATES, true);
             settings.put(BatchSettings.ORDER_INSERTS, true);
             settings.put(BatchSettings.STATEMENT_BATCH_SIZE, 20);
-            settings.put(BatchSettings.BATCH_VERSIONED_DATA, true);
             settings.put(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "thread");
             settings.put(MappingSettings.PHYSICAL_NAMING_STRATEGY, io.hypersistence.utils.hibernate.naming.CamelCaseToSnakeCaseNamingStrategy.INSTANCE);
             settings.put(ValidationSettings.JAKARTA_VALIDATION_MODE, ValidationMode.NONE);
