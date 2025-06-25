@@ -19,7 +19,7 @@
         <maven.jacoco.plugin.version>0.8.13</maven.jacoco.plugin.version>
 
         <hibernate.orm.version>7.0.2.Final</hibernate.orm.version>
-        <junit.bom.version>5.13.1</junit.bom.version>
+        <junit.bom.version>5.13.2</junit.bom.version>
         <h2db.version>2.3.232</h2db.version>
         <mysqldb.version>9.3.0</mysqldb.version>
         <postgresdb.version>42.7.7</postgresdb.version>
