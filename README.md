@@ -1,13 +1,13 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=deepaksorthiya_hibernate-6-orm-getting-start&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=deepaksorthiya_hibernate-6-orm-getting-start)
-[![Java Maven Build Test](https://github.com/deepaksorthiya/hibernate-6-orm-getting-start/actions/workflows/maven-build.yml/badge.svg)](https://github.com/deepaksorthiya/hibernate-6-orm-getting-start/actions/workflows/maven-build.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=deepaksorthiya_hibernate-orm-getting-start&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=deepaksorthiya_hibernate-orm-getting-start)
+[![Java Maven Build Test](https://github.com/deepaksorthiya/hibernate-orm-getting-start/actions/workflows/maven-build.yml/badge.svg)](https://github.com/deepaksorthiya/hibernate-orm-getting-start/actions/workflows/maven-build.yml)
 
 # Getting Started
 
 ## Requirements:
 
 ```
-Git: 2.49.0
-Hibernate: 7.0.4.Final
+Git: 2.50.1
+Hibernate: 7.1.0.Final
 H2 Database: 2.3.232
 Maven: 3.9+
 JDK: 24
@@ -16,11 +16,11 @@ JDK: 24
 ### Clone this repository:
 
 ```bash
-git clone https://github.com/deepaksorthiya/hibernate-6-orm-getting-start.git
+git clone https://github.com/deepaksorthiya/hibernate-orm-getting-start.git
 ```
 
 ```bash
-cd hibernate-6-orm-getting-start
+cd hibernate-orm-getting-start
 ```
 
 ### Run Test(Maven Should Be Installed):
@@ -34,7 +34,7 @@ mvn clean test
 For further reference, please consider the following sections:
 
 1.
-    * [Hibernate User Guide](https://docs.jboss.org/hibernate/orm/6.6/quickstart/html_single/)
+    * [Hibernate User Guide](https://docs.jboss.org/hibernate/orm/7.1/quickstart/html_single/)
 2.
-    * [Hibernate Docs](https://docs.jboss.org/hibernate/stable/orm/userguide/html_single/Hibernate_User_Guide.html)
+    * [Hibernate Docs](https://docs.jboss.org/hibernate/orm/7.1/userguide/html_single/Hibernate_User_Guide.html)
 
