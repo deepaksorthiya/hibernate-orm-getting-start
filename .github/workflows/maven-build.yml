@@ -64,4 +64,4 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build and analyze
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=deepaksorthiya_hibernate-6-orm-getting-start -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=deepaksorthiya_hibernate-orm-getting-start -Dsonar.token=${{ secrets.SONAR_TOKEN }}
