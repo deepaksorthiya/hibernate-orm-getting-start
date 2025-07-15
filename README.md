@@ -6,8 +6,8 @@
 ## Requirements:
 
 ```
-Git: 2.49.0
-Hibernate: 7.0.5.Final
+Git: 2.50.1
+Hibernate: 7.0.6.Final
 H2 Database: 2.3.232
 Maven: 3.9+
 JDK: 24
