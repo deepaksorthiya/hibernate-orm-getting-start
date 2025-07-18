@@ -20,7 +20,7 @@ on:
       - 'docker-compose.yml'
       - 'docker/**'
       - '.gitattributes'
-  pull_request:
+  pull_request_target:
     branches: [ "main" ]
     types: [ opened, synchronize, reopened ]
   workflow_dispatch:
