@@ -26,7 +26,7 @@
         <lombok.version>1.18.38</lombok.version>
         <logback.version>1.5.18</logback.version>
         <datasource.proxy.version>1.11.0</datasource.proxy.version>
-        <hikariCP.version>7.0.1</hikariCP.version>
+        <hikariCP.version>7.0.2</hikariCP.version>
         <testcontainer.version>1.21.3</testcontainer.version>
         <hypersistence-utils.version>3.10.3</hypersistence-utils.version>
         <sonar.organization>deepaksorthiya</sonar.organization>
