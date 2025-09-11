@@ -7,7 +7,7 @@
 
 ```
 Git: 2.50.1
-Hibernate: 7.1.0.Final
+Hibernate: 6.6.28.Final
 H2 Database: 2.3.232
 Maven: 3.9+
 JDK: 24
@@ -34,7 +34,6 @@ mvn clean test
 For further reference, please consider the following sections:
 
 1.
-    * [Hibernate User Guide](https://docs.jboss.org/hibernate/orm/7.1/quickstart/html_single/)
+    * [Hibernate User Guide](https://docs.jboss.org/hibernate/orm/6.6/quickstart/html_single/)
 2.
-    * [Hibernate Docs](https://docs.jboss.org/hibernate/orm/7.1/userguide/html_single/Hibernate_User_Guide.html)
-
+    * [Hibernate Docs](https://docs.jboss.org/hibernate/stable/orm/userguide/html_single/Hibernate_User_Guide.html)
