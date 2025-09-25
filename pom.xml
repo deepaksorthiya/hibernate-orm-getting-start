@@ -20,7 +20,7 @@
 
         <hibernate.orm.version>7.1.0.Final</hibernate.orm.version>
         <junit.bom.version>5.13.4</junit.bom.version>
-        <h2db.version>2.3.232</h2db.version>
+        <h2db.version>2.4.240</h2db.version>
         <mysqldb.version>9.4.0</mysqldb.version>
         <postgresdb.version>42.7.8</postgresdb.version>
         <lombok.version>1.18.42</lombok.version>
