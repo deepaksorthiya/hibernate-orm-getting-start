@@ -18,7 +18,7 @@
         <maven.sonar.plugin.version>5.2.0.4988</maven.sonar.plugin.version>
         <maven.jacoco.plugin.version>0.8.14</maven.jacoco.plugin.version>
 
-        <hibernate.orm.version>7.1.0.Final</hibernate.orm.version>
+        <hibernate.orm.version>7.1.5.Final</hibernate.orm.version>
         <junit.bom.version>6.0.0</junit.bom.version>
         <h2db.version>2.4.240</h2db.version>
         <mysqldb.version>9.4.0</mysqldb.version>
