@@ -9,7 +9,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>24</java.version>
+        <java.version>25</java.version>
 
         <!-- plugin here -->
         <maven.surefire.plugin.version>3.5.4</maven.surefire.plugin.version>
@@ -18,7 +18,7 @@
         <maven.sonar.plugin.version>5.2.0.4988</maven.sonar.plugin.version>
         <maven.jacoco.plugin.version>0.8.14</maven.jacoco.plugin.version>
 
-        <hibernate.orm.version>7.1.0.Final</hibernate.orm.version>
+        <hibernate.orm.version>7.1.6.Final</hibernate.orm.version>
         <junit.bom.version>6.0.1</junit.bom.version>
         <h2db.version>2.4.240</h2db.version>
         <mysqldb.version>9.5.0</mysqldb.version>
@@ -89,7 +89,7 @@
         </dependency>
         <dependency>
             <groupId>io.hypersistence</groupId>
-            <artifactId>hypersistence-utils-hibernate-70</artifactId>
+            <artifactId>hypersistence-utils-hibernate-71</artifactId>
             <version>${hypersistence-utils.version}</version>
         </dependency>
         <dependency>

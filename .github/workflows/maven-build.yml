@@ -39,10 +39,10 @@ jobs:
         with:
           fetch-depth: '0'
 
-      - name: Set up JDK 24
+      - name: Set up JDK 25
         uses: actions/setup-java@v5
         with:
-          java-version: '24'
+          java-version: '25'
           distribution: 'temurin'
           cache: maven
 
@@ -64,4 +64,4 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build and analyze
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=deepaksorthiya_hibernate-orm-getting-start -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=deepaksorthiya_hibernate-orm-getting-start -Dsonar.token=${{ env.SONAR_TOKEN }}
