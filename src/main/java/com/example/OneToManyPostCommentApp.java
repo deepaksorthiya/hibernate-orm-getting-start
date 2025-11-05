@@ -14,7 +14,8 @@ public class OneToManyPostCommentApp {
     public static void main(String[] args) {
         savePost();
         getPost();
-        removePost();
+        removePostCommentOnly();
+        removePostFully();
         HibernateUtil.shutdown();
     }
 
@@ -44,12 +45,19 @@ public class OneToManyPostCommentApp {
 
     }
 
-    private static void removePost() {
+    private static void removePostCommentOnly() {
         sessionFactory.inTransaction(session -> {
             Post post = session.find(Post.class, 1L);
             PostComment comment = post.getComments().get(0);
 
             post.removeComment(comment);
+        });
+    }
+
+    private static void removePostFully() {
+        sessionFactory.inTransaction(session -> {
+            Post post = session.find(Post.class, 1L);
+            session.remove(post);
         });
     }
 }
