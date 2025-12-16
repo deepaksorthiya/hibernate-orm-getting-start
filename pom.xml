@@ -27,7 +27,7 @@
         <logback.version>1.5.22</logback.version>
         <datasource.proxy.version>1.11.0</datasource.proxy.version>
         <hikariCP.version>7.0.2</hikariCP.version>
-        <testcontainer.version>1.21.3</testcontainer.version>
+        <testcontainer.version>1.21.4</testcontainer.version>
         <hypersistence-utils.version>3.13.3</hypersistence-utils.version>
         <sonar.organization>deepaksorthiya</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
