@@ -18,7 +18,7 @@
         <maven.sonar.plugin.version>5.5.0.6356</maven.sonar.plugin.version>
         <maven.jacoco.plugin.version>0.8.14</maven.jacoco.plugin.version>
 
-        <hibernate.orm.version>7.1.6.Final</hibernate.orm.version>
+        <hibernate.orm.version>7.2.0.Final</hibernate.orm.version>
         <junit.bom.version>6.0.1</junit.bom.version>
         <h2db.version>2.4.240</h2db.version>
         <mysqldb.version>9.5.0</mysqldb.version>
@@ -28,7 +28,7 @@
         <datasource.proxy.version>1.11.0</datasource.proxy.version>
         <hikariCP.version>7.0.2</hikariCP.version>
         <testcontainer.version>1.21.4</testcontainer.version>
-        <hypersistence-utils.version>3.13.3</hypersistence-utils.version>
+        <hypersistence-utils.version>3.14.1</hypersistence-utils.version>
         <sonar.organization>deepaksorthiya</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
