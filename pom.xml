@@ -23,7 +23,7 @@
         <h2db.version>2.4.240</h2db.version>
         <mysqldb.version>9.6.0</mysqldb.version>
         <postgresdb.version>42.7.10</postgresdb.version>
-        <lombok.version>1.18.44</lombok.version>
+        <lombok.version>1.18.46</lombok.version>
         <logback.version>1.5.32</logback.version>
         <datasource.proxy.version>1.11.0</datasource.proxy.version>
         <hikariCP.version>7.0.2</hikariCP.version>
