@@ -7,8 +7,8 @@
 
 ```
 Git: 2.51+
-Hibernate: 7.2.0.Final
-H2 Database: 2.3.232
+Hibernate: 7.4.1.Final
+H2 Database: 2.4.240
 Maven: 3.9+
 JDK: 25
 ```
