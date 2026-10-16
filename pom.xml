@@ -25,7 +25,7 @@
         <postgresdb.version>42.7.14</postgresdb.version>
         <lombok.version>1.18.48</lombok.version>
         <logback.version>1.6.5</logback.version>
-        <datasource.proxy.version>1.11.0</datasource.proxy.version>
+        <datasource.proxy.version>1.11.1</datasource.proxy.version>
         <hikariCP.version>7.1.0</hikariCP.version>
         <testcontainer.version>1.21.4</testcontainer.version>
         <hypersistence-utils.version>3.16.0</hypersistence-utils.version>
