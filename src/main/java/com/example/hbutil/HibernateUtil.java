@@ -139,6 +139,9 @@ public class HibernateUtil {
         //Don't use AutoCommit
         config.setAutoCommit(false);
 
+        // set isolation level
+        //config.setTransactionIsolation(String.valueOf(Connection.TRANSACTION_SERIALIZABLE));
+
         HikariDataSource ds = new HikariDataSource(config);
         closeable.add(ds::close);
         return ds;
