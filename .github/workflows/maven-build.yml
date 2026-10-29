@@ -46,8 +46,19 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Set Execution Permission
+        run: |
+          chmod +x mvnw
+
+      - name: Check JVM Maven Versions
+        run: |
+          echo "JAVA_HOME: $JAVA_HOME"
+          java --version
+          mvn -v
+          ./mvnw -v
+
       - name: Clean with Maven
-        run: mvn clean --file pom.xml --batch-mode --update-snapshots
+        run: ./mvnw clean --file pom.xml --batch-mode --update-snapshots
 
       - name: Cache SonarQube Cloud packages
         uses: actions/cache@v6
@@ -64,4 +75,4 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build and analyze
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=deepaksorthiya_hibernate-orm-getting-start -Dsonar.token=${{ env.SONAR_TOKEN }}
+        run: ./mvnw -B verify sonar:sonar -Dsonar.projectKey=deepaksorthiya_hibernate-orm-getting-start -Dsonar.token=${{ env.SONAR_TOKEN }}
