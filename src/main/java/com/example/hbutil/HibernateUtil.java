@@ -60,6 +60,7 @@ public class HibernateUtil {
             StandardServiceRegistryBuilder standardRegistryBuilder = new StandardServiceRegistryBuilder();
             Map<String, Object> settings = new HashMap<>();
             settings.put(JdbcSettings.JAKARTA_JTA_DATASOURCE, getDataSource(database));
+            settings.put(JdbcSettings.CONNECTION_PROVIDER_DISABLES_AUTOCOMMIT, true);
 //            settings.put(JdbcSettings.SHOW_SQL, "true");
 //            settings.put(JdbcSettings.FORMAT_SQL, "true");
 //            settings.put(JdbcSettings.HIGHLIGHT_SQL, "true");
@@ -72,6 +73,10 @@ public class HibernateUtil {
             settings.put(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, "thread");
             settings.put(MappingSettings.PHYSICAL_NAMING_STRATEGY, io.hypersistence.utils.hibernate.naming.CamelCaseToSnakeCaseNamingStrategy.INSTANCE);
             settings.put(ValidationSettings.JAKARTA_VALIDATION_MODE, ValidationMode.NONE);
+
+            settings.put(QuerySettings.IN_CLAUSE_PARAMETER_PADDING, true);
+            settings.put(QuerySettings.FAIL_ON_PAGINATION_OVER_COLLECTION_FETCH, true);
+            settings.put(QuerySettings.QUERY_PLAN_CACHE_MAX_SIZE, 4096);
 
             standardRegistryBuilder.applySettings(settings);
             standardRegistry = standardRegistryBuilder.build();

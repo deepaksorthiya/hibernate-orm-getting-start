@@ -50,6 +50,6 @@ public class PostgreSQLDataSourceProvider extends AbstractContainerDataSourcePro
 
     @Override
     public JdbcDatabaseContainer newJdbcDatabaseContainer() {
-        return new PostgreSQLContainer("postgres:16");
+        return new PostgreSQLContainer("17-alpine");
     }
 }
