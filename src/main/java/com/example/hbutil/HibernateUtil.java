@@ -65,7 +65,7 @@ public class HibernateUtil {
 //            settings.put(JdbcSettings.FORMAT_SQL, "true");
 //            settings.put(JdbcSettings.HIGHLIGHT_SQL, "true");
 //            settings.put(JdbcSettings.DIALECT, "org.hibernate.dialect.H2Dialect");
-            settings.put(StatisticsSettings.GENERATE_STATISTICS, true);
+//            settings.put(StatisticsSettings.GENERATE_STATISTICS, true);
             settings.put(SchemaToolingSettings.HBM2DDL_AUTO, Action.ACTION_CREATE_THEN_DROP);
             settings.put(BatchSettings.ORDER_UPDATES, true);
             settings.put(BatchSettings.ORDER_INSERTS, true);
@@ -76,6 +76,7 @@ public class HibernateUtil {
 
             settings.put(QuerySettings.IN_CLAUSE_PARAMETER_PADDING, true);
             settings.put(QuerySettings.FAIL_ON_PAGINATION_OVER_COLLECTION_FETCH, true);
+            settings.put(QuerySettings.CRITERIA_PLAN_CACHE_ENABLED, true);
             settings.put(QuerySettings.QUERY_PLAN_CACHE_MAX_SIZE, 4096);
 
             standardRegistryBuilder.applySettings(settings);

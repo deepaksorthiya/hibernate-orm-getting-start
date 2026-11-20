@@ -11,6 +11,9 @@ public enum Database {
     H2 {
         @Override
         DataSource getDataSource() {
+            // Disable the default fetch size for H2 to avoid memory issues with large result sets
+            // for hypersistence-optimizer error fix
+            System.setProperty("h2.serverResultSetFetchSize", "0");
             JdbcDataSource ds = new JdbcDataSource();
             ds.setURL("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1");
             ds.setUser("sa");
