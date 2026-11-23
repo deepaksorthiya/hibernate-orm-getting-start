@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Disabled
+//@Disabled
 class OneToOneMapsIdTest {
 
     private static SessionFactory sessionFactory;
@@ -29,6 +30,11 @@ class OneToOneMapsIdTest {
 //                new HibernateConfig(sessionFactory));
 //        List<Event> events = hypersistenceOptimizer.getEvents();
 //        System.out.println(events);
+    }
+
+    @AfterAll
+    static void tearDown() {
+        HibernateUtil.shutdown();
     }
 
     @Test
