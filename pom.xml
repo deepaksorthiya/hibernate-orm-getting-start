@@ -18,7 +18,7 @@
         <maven.sonar.plugin.version>5.9.0.7382</maven.sonar.plugin.version>
         <maven.jacoco.plugin.version>0.8.16</maven.jacoco.plugin.version>
 
-        <hibernate.orm.version>7.4.13.Final</hibernate.orm.version>
+        <hibernate.orm.version>7.4.16.Final</hibernate.orm.version>
         <junit.bom.version>6.1.3</junit.bom.version>
         <h2db.version>2.5.252</h2db.version>
         <mysqldb.version>26.10.0</mysqldb.version>
@@ -89,7 +89,7 @@
         </dependency>
         <dependency>
             <groupId>io.hypersistence</groupId>
-            <artifactId>hypersistence-utils-hibernate-71</artifactId>
+            <artifactId>hypersistence-utils-hibernate-73</artifactId>
             <version>${hypersistence-utils.version}</version>
         </dependency>
         <dependency>
