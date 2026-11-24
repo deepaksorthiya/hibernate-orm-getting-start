@@ -16,6 +16,16 @@ import java.time.LocalDateTime;
 @SoftDelete
 public class Event {
 
+    // uuid v7 hibernate 7 style
+//    @Id
+//    @UuidGenerator(style = UuidGenerator.Style.VERSION_7)
+//    private UUID id;
+
+    // uuid v4 jpa style
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.UUID)
+//    private UUID id;
+
     @Id
     @GeneratedValue
     private Long id;
