@@ -14,5 +14,7 @@
 <!--    <logger name="org.hibernate" level="TRACE">
         <appender-ref ref="stdout"/>
     </logger>-->
+<!--
     <logger name="net.ttddyy.dsproxy.listener" level="debug"/>
+-->
 </configuration>

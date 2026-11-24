@@ -4,8 +4,9 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.ValidationMode;
 import lombok.extern.slf4j.Slf4j;
+import net.ttddyy.dsproxy.QueryInfo;
 import net.ttddyy.dsproxy.listener.logging.DefaultQueryLogEntryCreator;
-import net.ttddyy.dsproxy.listener.logging.SystemOutQueryLoggingListener;
+import net.ttddyy.dsproxy.listener.logging.SLF4JQueryLoggingListener;
 import net.ttddyy.dsproxy.support.ProxyDataSourceBuilder;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -27,6 +28,16 @@ import java.util.concurrent.TimeUnit;
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
     private static final List<Closeable> closeable = new ArrayList<>();
+    private static final Set<String> skipQueriesToLog = Set.of(
+            "create table",
+            "drop table",
+            "alter table",
+            "create sequence",
+            "drop sequence",
+            "next value",
+            "create global",
+            "comment on"
+    );
 
     private HibernateUtil() throws IllegalAccessException {
         throw new IllegalAccessException("This is utility method, cannot create object");
@@ -106,7 +117,8 @@ public class HibernateUtil {
         // use pretty formatted query with multiline enabled
         PrettyQueryEntryCreator creator = new PrettyQueryEntryCreator();
         creator.setMultiline(true);
-        SystemOutQueryLoggingListener listener = new CustomSysLogger();
+        SLF4JQueryLoggingListener listener = new SLF4JQueryLoggingListener();
+        listener.setLoggingFilter((_, queryInfoList) -> queryInfoList.stream().map(QueryInfo::getQuery).noneMatch(query -> skipQueriesToLog.stream().anyMatch(query::contains)));
         listener.setQueryLogEntryCreator(creator);
 
         //actual datasource
@@ -151,28 +163,6 @@ public class HibernateUtil {
         HikariDataSource ds = new HikariDataSource(config);
         closeable.add(ds::close);
         return ds;
-    }
-
-    private static class CustomSysLogger extends SystemOutQueryLoggingListener {
-        private static final Set<String> skipQueriesToLog = Set.of(
-                "create table",
-                "drop table",
-                "alter table",
-                "create sequence",
-                "drop sequence",
-                "next value",
-                "create global"
-        );
-
-        @Override
-        protected void writeLog(String message) {
-            for (String query : skipQueriesToLog) {
-                if (message.contains(query)) {
-                    return;
-                }
-            }
-            super.writeLog(message);
-        }
     }
 
     // use hibernate to format queries
