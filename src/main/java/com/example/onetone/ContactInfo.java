@@ -2,6 +2,8 @@ package com.example.onetone;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +23,7 @@ public class ContactInfo {
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "user_id") // comment it to show warning message by setting details to null
+    @OnDelete(action = OnDeleteAction.CASCADE) // mirrors the DB's ON DELETE CASCADE
     private UserProfile userProfile;
 
 }
